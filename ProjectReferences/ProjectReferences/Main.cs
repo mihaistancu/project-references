@@ -20,13 +20,8 @@ namespace ProjectReferences
             foreach (var project in files)
             {
                 var node = treeView1.Nodes.Add(Path.GetFileNameWithoutExtension(project));
-
-                var references = References(project);
-
-                foreach (var reference in references)
-                {
-                    node.Nodes.Add(Path.GetFileNameWithoutExtension(reference));
-                }
+                node.ToolTipText = project;
+                BuildTree(node);
             }
         }
 
@@ -35,7 +30,20 @@ namespace ProjectReferences
             if (e.Data.GetDataPresent(DataFormats.FileDrop, false))   
                 e.Effect = DragDropEffects.All; 
         }
-        
+
+        private void BuildTree(TreeNode node)
+        {
+            var references = References(node.ToolTipText);
+
+            foreach (var reference in references)
+            {
+                var path = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(node.ToolTipText), reference));
+                var child = node.Nodes.Add(Path.GetFileNameWithoutExtension(path));
+                child.ToolTipText = path;
+                BuildTree(child);
+            }
+        }
+
         private List<string> References(string projectPath)
         {
             return XDocument.Load(projectPath)

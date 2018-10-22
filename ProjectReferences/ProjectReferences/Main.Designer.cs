@@ -38,6 +38,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.treeView1.Location = new System.Drawing.Point(12, 12);
             this.treeView1.Name = "treeView1";
+            this.treeView1.ShowNodeToolTips = true;
             this.treeView1.Size = new System.Drawing.Size(917, 637);
             this.treeView1.TabIndex = 0;
             // 
