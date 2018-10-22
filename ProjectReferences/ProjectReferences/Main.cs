@@ -19,9 +19,7 @@ namespace ProjectReferences
             
             foreach (var project in files)
             {
-                var node = hierarchicalReferences.Nodes.Add(Path.GetFileNameWithoutExtension(project));
-                node.ToolTipText = project;
-                BuildTree(node);
+                hierarchicalReferences.Nodes.Add(BuildTree(project));
             }
 
             foreach (TreeNode node in hierarchicalReferences.Nodes)
@@ -52,17 +50,25 @@ namespace ProjectReferences
                 e.Effect = DragDropEffects.All; 
         }
 
-        private void BuildTree(TreeNode node)
+        private TreeNode BuildTree(string projectPath)
         {
-            var references = References(node.ToolTipText);
+            var node = new TreeNode
+            {
+                Text = Path.GetFileNameWithoutExtension(projectPath),
+                ToolTipText = projectPath
+            };
+
+            var references = References(projectPath);
 
             foreach (var reference in references)
-            {
+            {   
                 var path = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(node.ToolTipText), reference));
-                var child = node.Nodes.Add(Path.GetFileNameWithoutExtension(path));
-                child.ToolTipText = path;
-                BuildTree(child);
+                
+                var referenceNode = BuildTree(path);
+                node.Nodes.Add(referenceNode);
             }
+
+            return node;
         }
 
         private List<string> References(string projectPath)
