@@ -19,14 +19,14 @@ namespace ProjectReferences
             
             foreach (var project in files)
             {
-                var node = treeView1.Nodes.Add(Path.GetFileNameWithoutExtension(project));
+                var node = hierarchicalReferences.Nodes.Add(Path.GetFileNameWithoutExtension(project));
                 node.ToolTipText = project;
                 BuildTree(node);
             }
 
-            foreach (TreeNode node in treeView1.Nodes)
+            foreach (TreeNode node in hierarchicalReferences.Nodes)
             {
-                var node2 = treeView2.Nodes.Add(node.Text);
+                var node2 = flatReferences.Nodes.Add(node.Text);
                 var references = new HashSet<string>();
                 MakeFlatTree(node, references);
 
