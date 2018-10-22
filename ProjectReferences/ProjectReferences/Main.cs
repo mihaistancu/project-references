@@ -23,6 +23,27 @@ namespace ProjectReferences
                 node.ToolTipText = project;
                 BuildTree(node);
             }
+
+            foreach (TreeNode node in treeView1.Nodes)
+            {
+                var node2 = treeView2.Nodes.Add(node.Text);
+                var references = new HashSet<string>();
+                MakeFlatTree(node, references);
+
+                foreach (var reference in references)
+                {
+                    node2.Nodes.Add(reference);
+                }
+            }
+        }
+
+        private void MakeFlatTree(TreeNode node, HashSet<string> references)
+        {
+            foreach (TreeNode r in node.Nodes)
+            {
+                references.Add(r.Text);
+                MakeFlatTree(r, references);
+            }
         }
 
         private void Main_DragEnter(object sender, DragEventArgs e)
