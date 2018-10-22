@@ -1,8 +1,5 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using System.Windows.Forms;
-using System.Xml.Linq;
 
 namespace ProjectReferences
 {
@@ -12,7 +9,7 @@ namespace ProjectReferences
         {
             var node = NewNode(projectPath);
             
-            foreach (var reference in References(projectPath))
+            foreach (var reference in Project.References(projectPath))
             {
                 var referenceNode = Build(reference);
                 node.Nodes.Add(referenceNode);
@@ -28,18 +25,6 @@ namespace ProjectReferences
                 Text = Path.GetFileNameWithoutExtension(projectPath),
                 ToolTipText = projectPath
             };
-        }
-
-        private static string FullPath(string parentPath, string relativePath)
-        {
-            return Path.GetFullPath(Path.Combine(Path.GetDirectoryName(parentPath), relativePath));
-        }
-
-        private static List<string> References(string projectPath)
-        {
-            return XDocument.Load(projectPath)
-                .Descendants().Where(e => e.Name.LocalName == "ProjectReference")
-                .Select(e => FullPath(projectPath, e.Attribute("Include").Value)).ToList();
         }
     }
 }
