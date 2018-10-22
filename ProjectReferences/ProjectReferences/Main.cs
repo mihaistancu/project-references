@@ -16,5 +16,17 @@ namespace ProjectReferences
         {
             InitializeComponent();
         }
+
+        private void Main_DragDrop(object sender, DragEventArgs e)
+        {
+            var files = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+            MessageBox.Show(string.Join("\r\n", files));
+        }
+
+        private void Main_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop, false))   
+                e.Effect = DragDropEffects.All; 
+        }
     }
 }

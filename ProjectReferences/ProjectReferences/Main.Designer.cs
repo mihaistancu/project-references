@@ -30,13 +30,16 @@
         {
             this.SuspendLayout();
             // 
-            // Form1
+            // Main
             // 
+            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(709, 355);
-            this.Name = "Form1";
+            this.ClientSize = new System.Drawing.Size(941, 661);
+            this.Name = "Main";
             this.Text = "Project References";
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.Main_DragDrop);
+            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.Main_DragEnter);
             this.ResumeLayout(false);
 
         }
