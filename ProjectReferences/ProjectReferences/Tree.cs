@@ -14,8 +14,7 @@ namespace ProjectReferences
             
             foreach (var reference in References(projectPath))
             {
-                var path = FullPath(node.ToolTipText, reference);
-                var referenceNode = Build(path);
+                var referenceNode = Build(reference);
                 node.Nodes.Add(referenceNode);
             }
 
@@ -40,7 +39,7 @@ namespace ProjectReferences
         {
             return XDocument.Load(projectPath)
                 .Descendants().Where(e => e.Name.LocalName == "ProjectReference")
-                .Select(e=>e.Attribute("Include").Value).ToList();
+                .Select(e => FullPath(projectPath, e.Attribute("Include").Value)).ToList();
         }
     }
 }
