@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace ProjectReferences
 {
-    public class Dependencies
+    public class Dependency
     {
         public static TreeNode Hierarchy(string projectPath)
         {
@@ -25,6 +25,36 @@ namespace ProjectReferences
             var references = Project.AllReferences(projectPath).Select(Node).ToArray();
             node.Nodes.AddRange(references);
             return node;
+        }
+
+        public static void FolderStructure(TreeNodeCollection nodes, string projectPath)
+        {
+            var references = Project.AllReferences(projectPath);
+
+            foreach (var reference in references)
+            {
+                AddPath(nodes, reference);
+            }
+        }
+
+        private static void AddPath(TreeNodeCollection nodes, string path)
+        {
+            var folders = path.Split(Path.DirectorySeparatorChar);
+            
+            foreach (var folder in folders)
+            {
+                nodes = Add(nodes, folder).Nodes;
+            }
+        }
+
+        private static TreeNode Add(TreeNodeCollection nodes, string folder)
+        {
+            foreach (TreeNode node in nodes)
+            {
+                if (node.Text == folder) return node;
+            }
+
+            return nodes.Add(folder);
         }
 
         private static TreeNode Node(string projectPath)

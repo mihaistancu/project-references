@@ -30,6 +30,7 @@
         {
             this.hierarchicalReferences = new System.Windows.Forms.TreeView();
             this.flatReferences = new System.Windows.Forms.TreeView();
+            this.folderStructure = new System.Windows.Forms.TreeView();
             this.SuspendLayout();
             // 
             // hierarchicalReferences
@@ -40,18 +41,28 @@
             this.hierarchicalReferences.Location = new System.Drawing.Point(12, 12);
             this.hierarchicalReferences.Name = "hierarchicalReferences";
             this.hierarchicalReferences.ShowNodeToolTips = true;
-            this.hierarchicalReferences.Size = new System.Drawing.Size(427, 637);
+            this.hierarchicalReferences.Size = new System.Drawing.Size(305, 637);
             this.hierarchicalReferences.TabIndex = 0;
             // 
             // flatReferences
             // 
             this.flatReferences.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.flatReferences.Location = new System.Drawing.Point(445, 12);
+            this.flatReferences.Location = new System.Drawing.Point(323, 12);
             this.flatReferences.Name = "flatReferences";
             this.flatReferences.ShowNodeToolTips = true;
-            this.flatReferences.Size = new System.Drawing.Size(484, 637);
+            this.flatReferences.Size = new System.Drawing.Size(300, 637);
             this.flatReferences.TabIndex = 1;
+            // 
+            // folderStructure
+            // 
+            this.folderStructure.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.folderStructure.Location = new System.Drawing.Point(629, 12);
+            this.folderStructure.Name = "folderStructure";
+            this.folderStructure.ShowNodeToolTips = true;
+            this.folderStructure.Size = new System.Drawing.Size(300, 637);
+            this.folderStructure.TabIndex = 1;
             // 
             // Main
             // 
@@ -59,6 +70,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(941, 661);
+            this.Controls.Add(this.folderStructure);
             this.Controls.Add(this.flatReferences);
             this.Controls.Add(this.hierarchicalReferences);
             this.Name = "Main";
@@ -73,6 +85,7 @@
 
         private System.Windows.Forms.TreeView hierarchicalReferences;
         private System.Windows.Forms.TreeView flatReferences;
+        private System.Windows.Forms.TreeView folderStructure;
     }
 }
 

@@ -15,8 +15,9 @@ namespace ProjectReferences
             
             foreach (var project in files)
             {
-                hierarchicalReferences.Nodes.Add(Dependencies.Hierarchy(project));
-                flatReferences.Nodes.Add(Dependencies.FlatList(project));
+                hierarchicalReferences.Nodes.Add(Dependency.Hierarchy(project));
+                flatReferences.Nodes.Add(Dependency.FlatList(project));
+                Dependency.FolderStructure(folderStructure.Nodes, project);
             }
         }
 
