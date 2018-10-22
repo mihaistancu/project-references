@@ -49,6 +49,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.flatReferences.Location = new System.Drawing.Point(445, 12);
             this.flatReferences.Name = "flatReferences";
+            this.flatReferences.ShowNodeToolTips = true;
             this.flatReferences.Size = new System.Drawing.Size(484, 637);
             this.flatReferences.TabIndex = 1;
             // 
