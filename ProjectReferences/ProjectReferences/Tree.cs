@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace ProjectReferences
@@ -7,11 +8,7 @@ namespace ProjectReferences
     {
         public static TreeNode Hierarchy(string projectPath)
         {
-            var node = new TreeNode
-            {
-                Text = Path.GetFileNameWithoutExtension(projectPath),
-                ToolTipText = projectPath
-            };
+            var node = Node(projectPath);
             
             foreach (var reference in Project.DirectReferences(projectPath))
             {
@@ -24,22 +21,19 @@ namespace ProjectReferences
         
         public static TreeNode FlatList(string projectPath)
         {
-            var node = new TreeNode
+            var node = Node(projectPath);
+            var references = Project.AllReferences(projectPath).Select(Node).ToArray();
+            node.Nodes.AddRange(references);
+            return node;
+        }
+
+        private static TreeNode Node(string projectPath)
+        {
+            return new TreeNode
             {
                 Text = Path.GetFileNameWithoutExtension(projectPath),
                 ToolTipText = projectPath
             };
-
-            var dependencies = Project.AllReferences(projectPath);
-            
-            foreach (var reference in dependencies)
-            {
-                var referenceNode = new TreeNode(Path.GetFileNameWithoutExtension(reference));
-                referenceNode.ToolTipText = reference;
-                node.Nodes.Add(referenceNode);
-            }
-
-            return node;
         }
     }
 }
