@@ -16,7 +16,7 @@ namespace ProjectReferences
             
             foreach (var project in files)
             {
-                hierarchicalReferences.Nodes.Add(Tree.Build(project));
+                hierarchicalReferences.Nodes.Add(Dependencies.Hierarchy(project));
             }
 
             foreach (TreeNode node in hierarchicalReferences.Nodes)

@@ -3,28 +3,23 @@ using System.Windows.Forms;
 
 namespace ProjectReferences
 {
-    public class Tree
+    public class Dependencies
     {
-        public static TreeNode Build(string projectPath)
+        public static TreeNode Hierarchy(string projectPath)
         {
-            var node = NewNode(projectPath);
-            
-            foreach (var reference in Project.References(projectPath))
-            {
-                var referenceNode = Build(reference);
-                node.Nodes.Add(referenceNode);
-            }
-
-            return node;
-        }
-
-        private static TreeNode NewNode(string projectPath)
-        {
-            return new TreeNode
+            var node = new TreeNode
             {
                 Text = Path.GetFileNameWithoutExtension(projectPath),
                 ToolTipText = projectPath
             };
+            
+            foreach (var reference in Project.References(projectPath))
+            {
+                var referenceNode = Hierarchy(reference);
+                node.Nodes.Add(referenceNode);
+            }
+
+            return node;
         }
     }
 }
