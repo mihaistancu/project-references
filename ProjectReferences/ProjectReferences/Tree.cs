@@ -10,23 +10,30 @@ namespace ProjectReferences
     {
         public static TreeNode Build(string projectPath)
         {
-            var node = new TreeNode
+            var node = NewNode(projectPath);
+            
+            foreach (var reference in References(projectPath))
             {
-                Text = Path.GetFileNameWithoutExtension(projectPath),
-                ToolTipText = projectPath
-            };
-
-            var references = References(projectPath);
-
-            foreach (var reference in references)
-            {   
-                var path = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(node.ToolTipText), reference));
-                
+                var path = FullPath(node.ToolTipText, reference);
                 var referenceNode = Build(path);
                 node.Nodes.Add(referenceNode);
             }
 
             return node;
+        }
+
+        private static TreeNode NewNode(string projectPath)
+        {
+            return new TreeNode
+            {
+                Text = Path.GetFileNameWithoutExtension(projectPath),
+                ToolTipText = projectPath
+            };
+        }
+
+        private static string FullPath(string parentPath, string relativePath)
+        {
+            return Path.GetFullPath(Path.Combine(Path.GetDirectoryName(parentPath), relativePath));
         }
 
         private static List<string> References(string projectPath)
