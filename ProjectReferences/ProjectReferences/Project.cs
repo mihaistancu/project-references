@@ -7,7 +7,19 @@ namespace ProjectReferences
 {
     public class Project
     {
+        private static readonly Dictionary<string, List<string>> cache = new Dictionary<string, List<string>>();
+
         public static List<string> DirectReferences(string projectPath)
+        {
+            if (!cache.ContainsKey(projectPath))
+            {
+                cache.Add(projectPath, References(projectPath));
+            }
+
+            return cache[projectPath];
+        }
+
+        private static List<string> References(string projectPath)
         {
             return XDocument.Load(projectPath)
                 .Descendants().Where(e => e.Name.LocalName == "ProjectReference")
