@@ -29,11 +29,9 @@ namespace ProjectReferences
 
         public static void FolderStructure(TreeNodeCollection nodes, string projectPath)
         {
-            var references = Project.AllReferences(projectPath);
-
-            foreach (var reference in references)
+            foreach (var reference in Project.AllReferences(projectPath))
             {
-                Tree.AddPath(nodes, reference);
+                Tree.AddMultiple(nodes, reference.Split(Path.DirectorySeparatorChar));
             }
         }
         

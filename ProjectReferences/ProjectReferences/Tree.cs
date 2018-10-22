@@ -1,28 +1,26 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace ProjectReferences
 {
     public class Tree
     {
-        public static void AddPath(TreeNodeCollection nodes, string path)
+        public static void AddMultiple(TreeNodeCollection nodes, IEnumerable<string> successors)
         {
-            var folders = path.Split(Path.DirectorySeparatorChar);
-            
-            foreach (var folder in folders)
+            foreach (var item in successors)
             {
-                nodes = Add(nodes, folder).Nodes;
+                nodes = AddSingle(nodes, item).Nodes;
             }
         }
 
-        private static TreeNode Add(TreeNodeCollection nodes, string folder)
+        private static TreeNode AddSingle(TreeNodeCollection nodes, string item)
         {
             foreach (TreeNode node in nodes)
             {
-                if (node.Text == folder) return node;
+                if (node.Text == item) return node;
             }
 
-            return nodes.Add(folder);
+            return nodes.Add(item);
         }
     }
 }
