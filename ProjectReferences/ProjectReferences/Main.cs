@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace ProjectReferences
 {
@@ -17,27 +16,7 @@ namespace ProjectReferences
             foreach (var project in files)
             {
                 hierarchicalReferences.Nodes.Add(Dependencies.Hierarchy(project));
-            }
-
-            foreach (TreeNode node in hierarchicalReferences.Nodes)
-            {
-                var node2 = flatReferences.Nodes.Add(node.Text);
-                var references = new HashSet<string>();
-                MakeFlatTree(node, references);
-
-                foreach (var reference in references)
-                {
-                    node2.Nodes.Add(reference);
-                }
-            }
-        }
-
-        private void MakeFlatTree(TreeNode node, HashSet<string> references)
-        {
-            foreach (TreeNode r in node.Nodes)
-            {
-                references.Add(r.Text);
-                MakeFlatTree(r, references);
+                flatReferences.Nodes.Add(Dependencies.FlatList(project));
             }
         }
 

@@ -7,7 +7,7 @@ namespace ProjectReferences
 {
     public class Project
     {
-        public static List<string> References(string projectPath)
+        public static List<string> DirectReferences(string projectPath)
         {
             return XDocument.Load(projectPath)
                 .Descendants().Where(e => e.Name.LocalName == "ProjectReference")
@@ -17,6 +17,21 @@ namespace ProjectReferences
         private static string FullPath(string parentPath, string relativePath)
         {
             return Path.GetFullPath(Path.Combine(Path.GetDirectoryName(parentPath), relativePath));
+        }
+        
+        public static HashSet<string> AllReferences(string projectPath)
+        {
+            var hashSet = new HashSet<string>();
+            var directReferences = DirectReferences(projectPath);
+            hashSet.UnionWith(directReferences);
+
+            foreach (var reference in directReferences)
+            {
+                var indirectReferences = AllReferences(reference);
+                hashSet.UnionWith(indirectReferences);
+            }
+            
+            return hashSet;
         }
     }
 }
